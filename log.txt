@@ -1,0 +1,40 @@
+Lab 7:
+1. First I checked the see the version of sort installed is an updated
+version using the command:
+sort --version
+this gave me version 8.4 of sort which is more recent than 8.6, so we're
+good
+
+2. Next I created a file with 10M random numbers with the command:
+od -An -t f8 -N 80000000 < /dev/urandom | tr -s ' ' '\n' > random.txt
+this also replaced the new lines that were undesired
+
+3. After this I measured the time it took to run multiple threads with
+the sort command using the following line:
+time -p /usr/local/cs/bin/sort -g --parallel=N random.txt > /dev/null
+where N indicates the number of threads: 1, 2, 4, & 8 respectively
+
+4. The time it took the run N number of threads is recorded below
+as follows:
+
+1 thread:
+real 176.03
+user 175.86
+sys 0.24
+
+2 threads:
+real 94.95
+user 181.34
+sys 0.26
+
+4 threads:
+real 59.90
+user 191.04
+sys 0.35
+
+8 threads:
+real 39.01
+user 203.87
+sys 0.43
+
+Results: As we can see, the more threads we use the faster speeds we get.
