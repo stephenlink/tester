@@ -1,0 +1,31 @@
+Results of "make clean check":
+
+[link@lnxsrv04 ~/srt]$ make clean check
+rm -f *.o *.tmp 1-test.ppm 2-test.ppm 4-test.ppm 8-test.ppm srt srt.tgz
+gcc -std=gnu99 -g -O2 -Wall -Wextra -Wno-unused-parameter   -c -o main.o main.c
+gcc -std=gnu99 -g -O2 -Wall -Wextra -Wno-unused-parameter   -c -o raymath.o raymath.c
+gcc -std=gnu99 -g -O2 -Wall -Wextra -Wno-unused-parameter   -c -o shaders.o shaders.c
+gcc -std=gnu99 -g -O2 -Wall -Wextra -Wno-unused-parameter -o srt main.o raymath.o shaders.o -lm -lpthread
+time ./srt 1-test.ppm >1-test.ppm.tmp && mv 1-test.ppm.tmp 1-test.ppm
+
+real 0m48.008s
+user 0m48.013s
+sys  0m0.002s
+time ./srt 2-test.ppm >2-test.ppm.tmp && mv 2-test.ppm.tmp 2-test.ppm
+
+real 0m24.413s
+user 0m48.548s
+sys  0m0.001s
+time ./srt 4-test.ppm >4-test.ppm.tmp && mv 4-test.ppm.tmp 4-test.ppm
+
+real 0m12.149s
+user 0m48.135s
+sys  0m0.002s
+time ./srt 8-test.ppm >8-test.ppm.tmp && mv 8-test.ppm.tmp 8-test.ppm
+
+real 0m6.531s
+user 0m50.555s
+sys  0m0.002s
+for file in 1-test.ppm 2-test.ppm 4-test.ppm 8-test.ppm; do \
+      diff -u 1-test.ppm $file || exit; \
+      done
